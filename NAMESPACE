@@ -1,0 +1,6 @@
+importFrom("utils", "askYesNo", "download.file", "read.table", "unzip")
+export(
+    "fetch_table",
+    "fetch_table_date",
+    "fetch_table_info"
+)
