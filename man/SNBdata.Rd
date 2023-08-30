@@ -56,13 +56,10 @@ fetch_table_info(table = "rendoblid", dest.dir = NULL,
 \value{
   typically a \code{\link{data.frame}}.
 
-  \code{bis_datasets} returns a \code{\link{data.frame}}
-    with three columns:
-    \item{filename}{the dataset filename}
-    \item{description}{a brief description of the dataset}
-    \item{updated}{if available, the date when the
-      dataset was last updated}
 
+}
+\references{
+  \url{https://data.snb.ch/en/help#data_api}
 }
 \author{
   Enrico Schumann
@@ -73,7 +70,7 @@ fetch_table_info(table = "rendoblid", dest.dir = NULL,
 \examples{
 \donttest{
 ## (Internet connection required)
-datasets()
-bis.data <- fetch_dataset(dest.dir = tempdir(),
-                          "full_bis_total_credit_csv.zip")
+fetch_table("rendoblim",
+            dest.dir = "~/Downloads/SNBdata/",
+            language = "de")
 }}
