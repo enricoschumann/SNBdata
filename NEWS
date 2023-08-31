@@ -1,4 +1,4 @@
-v0.0-1  (2023-08-30; not yet released)
+v0.1.0  (2023-08-31)
 
-  o initial version: allows to download tables and datasets
-    from the SNB website; see https://data.snb.ch
+  o Initial version: Allows to download tables from the
+    SNB website; see https://data.snb.ch

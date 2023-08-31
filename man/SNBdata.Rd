@@ -17,13 +17,17 @@
 \usage{
 fetch_table(table = "rendoblid", dest.dir = NULL,
             return.class = NULL, verbose = TRUE,
-            method, ...)
-fetch_table_date(table = "rendoblid", dest.dir = NULL,
+            method,
+            language = "en",
+            name.sep = " :: ",
+            na.drop = TRUE, ...)
+fetch_table_date(table = "rendoblid",
+                 dest.dir = NULL,
                  verbose = TRUE,
                  language = "en", ...)
 fetch_table_info(table = "rendoblid", dest.dir = NULL,
                  return.class = NULL, verbose = TRUE,
-                 language = "en", ...)
+                 language = "en", method, ...)
 }
 \arguments{
   \item{dest.dir}{%
@@ -33,13 +37,13 @@ fetch_table_info(table = "rendoblid", dest.dir = NULL,
     the name of the table
   }
   \item{method}{%
-      see \code{\link{download.file}}
+   see \code{\link{download.file}}
   }
   \item{verbose}{
-    logical: print messages about download progress?
+    logical: print messages, e.g. about download progress?
   }
   \item{return.class}{\code{NULL} or character:
-      not yet implemented (but in future version,, only
+      not yet implemented (but in future versions, 
     \code{\link[zoo]{zoo}} will be supported)
   }
   \item{language}{
@@ -47,6 +51,13 @@ fetch_table_info(table = "rendoblid", dest.dir = NULL,
   }
   \item{\dots}{
     passed on to \code{\link{read.table}}
+  }
+  \item{name.sep}{
+    string used when pasting description hierarchies
+  }
+  \item{na.drop}{
+    logical. If \code{TRUE}, rows with no finite values at all
+    are dropped.
   }
 }
 \details{
