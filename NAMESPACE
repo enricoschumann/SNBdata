@@ -1,6 +1,7 @@
-importFrom("utils", "askYesNo", "download.file", "read.table", "unzip")
+importFrom("utils",
+           "askYesNo", "download.file", "read.table", "unzip")
 export(
-    "fetch_table",
-    "fetch_table_date",
-    "fetch_table_info"
+    "fetch_data",
+    "fetch_last_update",
+    "fetch_info"
 )

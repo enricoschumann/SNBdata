@@ -1,3 +1,11 @@
+v0.2.0  (2023-09-15; not released yet)
+
+  o New functions "fetch_data", "fetch_last_update" and
+    "fetch_info", which replace the previous functions
+    that worked for only tables or datasets.
+
+  o ....
+
 v0.1.0  (2023-08-31)
 
   o Initial version: Allows to download tables from the
