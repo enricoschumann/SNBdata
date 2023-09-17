@@ -1,4 +1,4 @@
-v0.2.0  (2023-09-15; not released yet)
+v0.2.0  (2023-09-17; not released yet)
 
   o New functions "fetch_data", "fetch_last_update" and
     "fetch_info", which replace the previous functions
