@@ -1,8 +1,12 @@
-v0.2.0  (2023-09-17; not released yet)
+v0.2.0  (2023-09-18; not released yet)
 
   o New functions "fetch_data", "fetch_last_update" and
     "fetch_info", which replace the previous functions
     that worked for only tables or datasets.
+
+  o Experimental: "fetch_data" gains an argument
+    "do.timeseries". If TRUE, tables and datasets are
+    transformed into time-series.
 
   o ....
 

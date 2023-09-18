@@ -2,7 +2,7 @@ Package: SNBdata
 Type: Package
 Title: Download Data from the Swiss National Bank (SNB)
 Version: 0.2.0
-Date: 2023-09-15
+Date: 2023-09-18
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Authors@R: person("Enrico", "Schumann",
                   role  = c("aut", "cre"),
