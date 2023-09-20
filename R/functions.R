@@ -3,11 +3,11 @@ fetch_data <- function(id,
                        dest.dir = NULL,
                        return.class = NULL,
                        verbose = TRUE,
-                       method,
                        language = "en",
                        name.sep = " :: ",
+                       method,
                        na.drop = TRUE,
-                       do.timeseries = FALSE, ...) {
+                       timeseries = FALSE, ...) {
 
     if (type == "table") {
         site <- paste0("https://data.snb.ch/api/cube/",
@@ -17,7 +17,7 @@ fetch_data <- function(id,
                        gsub("@", ".", id),
                        "/data/csv/", language)
     } else {
-        stop("either table of dataset must be specified")
+        stop("type must be either table or dataset")
     }
 
     info <- fetch_info(id = id, type = type,
@@ -74,13 +74,14 @@ fetch_data <- function(id,
                        stringsAsFactors = FALSE,
                        as.is = TRUE, skip = empty, ...)
 
-    if (do.timeseries) {
+    if (timeseries) {
         date.col <- grep("Date", colnames(dats))
-        if (!length(date.col)) {
-            message("no ", sQuote("Date"),
-                    " column: cannot create timeseries")
+        value.col <- grep("Value", colnames(dats))
+        if (!length(date.col) || !length(value.col)) {
+            message("both ", sQuote("Date"),
+                    " and ", sQuote("Value"),
+                    " column required for timeseries")
         } else {
-            value.col <- grep("Value", colnames(dats))
             other.col <- setdiff(colnames(dats),
                                  colnames(dats)[c(date.col,
                                                   value.col)])
@@ -143,7 +144,7 @@ fetch_data <- function(id,
 
     }
 
-    attr(result, "info") <- unlist(info)
+    attr(result, "dimensions") <- unlist(info)
     result
 }
 
@@ -151,7 +152,6 @@ fetch_data <- function(id,
 
 fetch_last_update <- function(id,
                               type = "table",
-                              dataset,
                               dest.dir = NULL,
                               verbose = TRUE,
                               language = "en", ...) {
