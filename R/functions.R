@@ -7,7 +7,7 @@ fetch_data <- function(id,
                        name.sep = " :: ",
                        method,
                        na.drop = TRUE,
-                       timeseries = FALSE, ...) {
+                       time.series = FALSE, ...) {
 
     if (type == "table") {
         site <- paste0("https://data.snb.ch/api/cube/",
@@ -71,10 +71,11 @@ fetch_data <- function(id,
     dats <- read.table(text = dats,
                        sep = ";",
                        header = TRUE,
+                       quote = 
                        stringsAsFactors = FALSE,
                        as.is = TRUE, skip = empty, ...)
 
-    if (timeseries) {
+    if (time.series) {
         date.col <- grep("Date", colnames(dats))
         value.col <- grep("Value", colnames(dats))
         if (!length(date.col) || !length(value.col)) {
@@ -87,6 +88,9 @@ fetch_data <- function(id,
                                                   value.col)])
 
             dates <- sort(unique(dats[, date.col]))
+            if (all(grepl("[12][0-9]{3}-[0-9]{2}-[0-9]{2}",
+                          dates, perl = TRUE)))
+                dates <- as.Date(dates)
             if (length(other.col) > 1L)
                 groups <- apply(dats[, other.col], 1, paste0,
                                 collapse = name.sep)

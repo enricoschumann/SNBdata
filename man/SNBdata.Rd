@@ -22,7 +22,7 @@ fetch_data(id,
            name.sep = " :: ",
            method,
            na.drop = TRUE,
-           timeseries = FALSE, ...)
+           time.series = FALSE, ...)
 
 fetch_last_update(id,
                   type = "table", dest.dir = NULL,
@@ -64,7 +64,7 @@ fetch_info(id,
   \item{name.sep}{%
     string used when pasting description hierarchies
   }
-  \item{timeseries}{%
+  \item{time.series}{%
     logical. If \code{TRUE}, data are transformed into
     time-series.
   }
@@ -89,10 +89,13 @@ fetch_info(id,
   date exists in \code{dest.dir}, that file is read, and
   nothing is downloaded.
 
-  When argument \code{timeseries} is \code{TRUE},
+  When argument \code{time.series} is \code{TRUE},
   \code{fetch_table} will rearrange the data into time-series.
   This requires columns named \dQuote{\code{Date}} and
-  \dQuote{\code{Value}} in the particular dataset/table.
+  \dQuote{\code{Value}} in the particular dataset/table.  If
+  the \dQuote{\code{Date}} column has a \code{YYYY-MM-DD}
+  pattern, it will will be transformed with
+  \code{\link{as.Date}}.
 
 }
 \value{
@@ -134,36 +137,22 @@ rates <- fetch_data("rendoblim",
                     type = "table",
                     dest.dir = data.dir,
                     language = "en")
-##      Date D0 Value
-## 1 1988-01 1J 2.887
-## 2 1988-01 2J 3.218
-## 3 1988-01 3J 3.393
-## 4 1988-01 4J 3.554
-## 5 1988-01 5J 3.695
-## ....
 
-### transform into time-series
+### ==> have data transformed into time-series
 rates <- fetch_data("rendoblim",
                     type = "table",
                     dest.dir = data.dir,
                     language = "en",
                     timeseries = TRUE)
-##      Date    1J    2J    3J ....
-## 1 1988-01 2.887 3.218 3.393 ....
-## 2 1988-02 2.638 2.990 3.271 ....
-## 3 1988-03 2.641 3.263 3.573 ....
-## ....
 
-attr(rates, "dimensions")
-##                                                           1J
-##  "Overview :: CHF Swiss Confederation bond issues :: 1 year"
-##                                                           2J
-## "Overview :: CHF Swiss Confederation bond issues :: 2 years"
-## ....
+if (!is.null(rates))  ## check: if download failed, results
+                      ##        are NULL
+    attr(rates, "dimensions")
+
 
 stock.markets <- fetch_data("capchstocki",
                             type = "table",
                             dest.dir = data.dir,
                             timeseries = TRUE)
-stock.markets[, "GDR"]  ## total return index
+## e.g.: stock.markets[, "GDR"]  ## total return index
 }}
