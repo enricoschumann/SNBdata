@@ -71,7 +71,6 @@ fetch_data <- function(id,
     dats <- read.table(text = dats,
                        sep = ";",
                        header = TRUE,
-                       quote = 
                        stringsAsFactors = FALSE,
                        as.is = TRUE, skip = empty, ...)
 
@@ -92,8 +91,9 @@ fetch_data <- function(id,
                           dates, perl = TRUE)))
                 dates <- as.Date(dates)
             if (length(other.col) > 1L)
-                groups <- apply(dats[, other.col], 1, paste0,
-                                collapse = name.sep)
+                groups <- do.call(function(...)
+                                      paste(..., sep = name.sep),
+                            dats[other.col])
             else
                 groups <- dats[, other.col]
             u.groups <- unique(groups)
@@ -106,20 +106,12 @@ fetch_data <- function(id,
 
             for (g in u.groups) {
                 tmp <- dats[g == groups, ]
-                ## no (documented) guarantee data are sorted
+
+                ## no (documented) guarantee data are sorted,
+                ## so match dates
                 i <- match(tmp$Date, dates)
                 result[i, g] <- tmp[, "Value"]
             }
-
-
-            ## id <- dats[[2]][seq(1, min(which(duplicated(dats[[2]]))) - 1)]
-            ## ans <- vector("list", length(id))
-            ## names(ans) <- as.character(id)
-            ## for (i in as.character(id)) {
-            ##     ans[[i]] <- dats[dats[, 2] == i, -2]
-            ## }
-            ## result <- do.call(cbind, lapply(ans, `[[`, 2))
-            ## row.names(result) <- ans[[1]][[1]]
 
             if (na.drop) {
                 drop <- apply(result[, -1], 1,
