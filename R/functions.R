@@ -34,20 +34,38 @@ fetch_data <- function(id,
         filename <- file.path(dest.dir, filename)
         if (!file.exists(filename)) {
             if (verbose)
-                message("Downloading data from SNB ... ", appendLF = FALSE)
-            download.file(url = site, destfile = filename,
-                          method = method,
-                          quiet = TRUE)
+                message("Downloading data from SNB ... ",
+                        appendLF = FALSE)
+            dl.result <- try(
+                download.file(url = site,
+                              destfile = filename,
+                              method = method,
+                              quiet = TRUE), silent = TRUE)
+            if (inherits(dl.result, "try-error")) {
+                warning("download failed with message ",
+                        sQuote(dl.result, FALSE))
+                return(invisible(NULL))
+            } else
+                dl.result <- 0
+
+            if (dl.result != 0L) {
+                warning("download failed with code ",
+                        dl.result, "; see ?download.file")
+                return(invisible(NULL))
+            }
+
         } else
             if (verbose)
                 message("Using cache ... ", appendLF = FALSE)
 
-        dats <- try(readLines(filename, warn = FALSE), silent = TRUE)
+        dats <- try(readLines(filename, warn = FALSE),
+                    silent = TRUE)
         em <- geterrmessage()
 
     } else {
         if (verbose)
-            message("Downloading data from SNB ... ", appendLF = FALSE)
+            message("Downloading data from SNB ... ",
+                    appendLF = FALSE)
 
         con <- url(site)
         dats <- try(readLines(con), silent = TRUE)
@@ -131,7 +149,8 @@ fetch_data <- function(id,
             if (requireNamespace("zoo"))
                 stop("not yet implemented")
             else
-                stop("package ", sQuote("zoo"), " not available")
+                stop("package ", sQuote("zoo"),
+                     " not available")
 
         else if (return.class == "data.frame")
             NULL
@@ -214,10 +233,26 @@ fetch_info <- function(id,
         filename <- file.path(dest.dir, filename)
         if (!file.exists(filename)) {
             if (verbose)
-                message("Downloading data from SNB ... ", appendLF = FALSE)
-            download.file(url = site, destfile = filename,
-                          method = method,
-                          quiet = TRUE)
+                message("Downloading data from SNB ... ",
+                        appendLF = FALSE)
+            dl.result <- try(
+                download.file(url = site,
+                              destfile = filename,
+                              method = method,
+                              quiet = TRUE), silent = TRUE)
+            if (inherits(dl.result, "try-error")) {
+                warning("download failed with message ",
+                        sQuote(dl.result, FALSE))
+                return(invisible(NULL))
+            } else
+                dl.result <- 0
+
+            if (dl.result != 0L) {
+                warning("download failed with code ",
+                        dl.result, "; see ?download.file")
+                return(invisible(NULL))
+            }
+
         } else
             if (verbose)
                 message("Using cache ... ", appendLF = FALSE)
@@ -227,7 +262,8 @@ fetch_info <- function(id,
 
     } else {
         if (verbose)
-            message("Downloading data from SNB ... ", appendLF = FALSE)
+            message("Downloading data from SNB ... ",
+                    appendLF = FALSE)
 
         con <- url(site)
         dats <- try(readLines(con, warn = FALSE), silent = TRUE)

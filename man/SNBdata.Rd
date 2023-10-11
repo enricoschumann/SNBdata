@@ -96,7 +96,6 @@ fetch_info(id,
   the \dQuote{\code{Date}} column has a \code{YYYY-MM-DD}
   pattern, it will will be transformed with
   \code{\link{as.Date}}.
-
 }
 \value{
   typically a \code{\link{data.frame}},
@@ -110,6 +109,8 @@ fetch_info(id,
       the columns used for grouping the rows
     }
   }
+  Should the download fail, the function returns
+  \code{\link{NULL}} invisibly.
 }
 \references{
   \url{https://data.snb.ch/en/}
@@ -143,7 +144,7 @@ rates <- fetch_data("rendoblim",
                     type = "table",
                     dest.dir = data.dir,
                     language = "en",
-                    timeseries = TRUE)
+                    time.series = TRUE)
 
 if (!is.null(rates))  ## check: if download failed, results
                       ##        are NULL
@@ -153,6 +154,6 @@ if (!is.null(rates))  ## check: if download failed, results
 stock.markets <- fetch_data("capchstocki",
                             type = "table",
                             dest.dir = data.dir,
-                            timeseries = TRUE)
+                            time.series = TRUE)
 ## e.g.: stock.markets[, "GDR"]  ## total return index
 }}

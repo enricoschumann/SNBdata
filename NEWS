@@ -7,7 +7,7 @@ v0.2.0  (2023-10-10; not released yet)
   o Retrieved data get an attribute "dimensions", which
     includes the available information about
     identifiers/ code lists.  (If package "jsonlite" is
-    available, that information is properly arranged.)
+    available, that information is readably arranged.)
 
   o Experimental: "fetch_data" gains an argument
     "time.series".  If TRUE, tables and datasets are
