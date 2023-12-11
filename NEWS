@@ -1,19 +1,17 @@
-v0.2.0  (2023-10-10; not released yet)
+v0.2.0  (2023-12-11)
 
   o New functions "fetch_data", "fetch_last_update" and
-    "fetch_info", which replace the previous functions
-    that worked for only tables or datasets.
+    "fetch_info", which replace the previous functions that
+    worked for only tables or datasets.
 
-  o Retrieved data get an attribute "dimensions", which
-    includes the available information about
-    identifiers/ code lists.  (If package "jsonlite" is
-    available, that information is readably arranged.)
+  o Retrieved data gain an attribute "info", which includes
+    the available information about identifiers/code lists.
+    If package "jsonlite" is available, that information is
+    readably arranged.
 
   o Experimental: "fetch_data" gains an argument
     "time.series".  If TRUE, tables and datasets are
     transformed into time-series.
-
-  o ....
 
 v0.1.0  (2023-08-31)
 

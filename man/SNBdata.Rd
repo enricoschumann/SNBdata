@@ -8,13 +8,13 @@
 \title{
   Download Data from the Swiss National Bank (SNB)
 }
-\description{
+\description{%
 
-  Download datasets from the Swiss National Bank (SNB)
-  and convert to data-frames.
+  Download data (\sQuote{tables} and \sQuote{datasets}) from the
+  Swiss National Bank (\acronym{SNB}) and convert to data-frames.
 
 }
-\usage{
+\usage{%
 fetch_data(id,
            type = "table", dest.dir = NULL,
            return.class = NULL, verbose = TRUE,
@@ -37,7 +37,7 @@ fetch_info(id,
 }
 \arguments{
   \item{dest.dir}{%
-    file path: where to store the files?
+    file path: where to store the downloaded files? See Details.
   }
   \item{id}{%
     string: identifier of the table/dataset
@@ -52,11 +52,13 @@ fetch_info(id,
     logical: print messages, e.g. about download progress?
   }
   \item{return.class}{%
+
     \code{NULL} or character: not yet implemented (but in
     future versions, \code{\link[zoo]{zoo}} will be supported)
+
   }
   \item{language}{%
-    string: \code{en}, \code{fr}, or \code{de}
+    string: \code{en}, \code{fr} or \code{de}
   }
   \item{\dots}{%
     passed on to \code{\link{read.table}}
@@ -70,50 +72,55 @@ fetch_info(id,
   }
   \item{na.drop}{%
     logical. If \code{TRUE}, rows with no finite values at all
-    are dropped.  Only used if \code{timeseries} is
+    are dropped.  Only used if \code{time.series} is
     \code{TRUE}.
   }
 }
-\details{
+\details{%
 
-  The Swiss National Bank (SNB) provides data as either
+  The Swiss National Bank (\acronym{SNB}) provides data as either
   so-called tables or datasets.  \code{fetch_table} can handle
   both, but the \code{type} argument must be specified.
 
   \code{fetch_table} downloads data, which typically are in
-  CSV format, from the SNBs's website and stores them, with a
-  date prefix, in directory \code{dest.dir}.  If the latter is
-  \code{NULL}, a temporary directory is used (through
-  \code{\link{tempdir}}); but much better is to use a
-  more-persistant storage location.  If a file with today's
-  date exists in \code{dest.dir}, that file is read, and
-  nothing is downloaded.
+  \acronym{csv} format, from the \acronym{SNB}'s website and
+  stores them, with a date prefix, in directory \code{dest.dir}.
+  If the latter is \code{NULL}, a temporary directory is used
+  (through \code{\link{tempdir}}); but much better is to use a
+  more-persistent storage location.  If a file with today's date
+  exists in \code{dest.dir}, that file is read, and nothing is
+  downloaded.
+
+  For downloading, function \code{\link{download.file}} is used.
+  See \code{\link{download.file}} for options; in particular, see
+  the hints about \code{timeout} when downloading large files.
 
   When argument \code{time.series} is \code{TRUE},
   \code{fetch_table} will rearrange the data into time-series.
   This requires columns named \dQuote{\code{Date}} and
-  \dQuote{\code{Value}} in the particular dataset/table.  If
-  the \dQuote{\code{Date}} column has a \code{YYYY-MM-DD}
-  pattern, it will will be transformed with
-  \code{\link{as.Date}}.
+  \dQuote{\code{Value}} in the particular dataset/table.  If the
+  \dQuote{\code{Date}} column has a \code{YYYY-MM-DD} pattern,
+  it will will be transformed with \code{\link{as.Date}}.
+
 }
-\value{
+\value{%
+
   typically a \code{\link{data.frame}},
   potentially with attributes additional attributes:
   \describe{
-    \item{\code{dimensions}}{%
-      information about identifiers used by the SNB
+    \item{\code{info}}{%
+      information about identifiers used by the \acronym{SNB}
     }
     \item{\code{columns}}{%
-      if \code{timeseries} is \code{TRUE}, the names of
-      the columns used for grouping the rows
+      if \code{time.series} is \code{TRUE}, the names of the
+      columns used for grouping the rows
     }
   }
   Should the download fail, the function returns
   \code{\link{NULL}} invisibly.
 }
 \references{
-  \url{https://data.snb.ch/en/}
+  \url{https://data.snb.ch/en}
 
   for \code{help} on the \acronym{API},
   see\url{https://data.snb.ch/en/help#data_api}
@@ -122,9 +129,6 @@ fetch_info(id,
 \author{
   Enrico Schumann
 }
-%% \seealso{
-%%   package
-%% }
 \examples{
 \donttest{
 ## (Internet connection required)
@@ -148,7 +152,7 @@ rates <- fetch_data("rendoblim",
 
 if (!is.null(rates))  ## check: if download failed, results
                       ##        are NULL
-    attr(rates, "dimensions")
+    attr(rates, "info")
 
 
 stock.markets <- fetch_data("capchstocki",

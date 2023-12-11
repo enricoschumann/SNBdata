@@ -25,6 +25,7 @@ fetch_data <- function(id,
                        dest.dir = dest.dir,
                        name.sep = name.sep,
                        method = method)
+    info <- unlist(info)
 
     if (!is.null(dest.dir)) {
         filename <- paste0(format(Sys.Date(), "%Y%m%d"),
@@ -158,8 +159,7 @@ fetch_data <- function(id,
             result <- NA
 
     }
-
-    attr(result, "dimensions") <- unlist(info)
+    attr(result, "info") <- info
     result
 }
 
